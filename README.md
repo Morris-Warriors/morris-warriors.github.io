@@ -7,3 +7,5 @@ Live site: https://morris-warriors.github.io
 Each game has its own link: `https://morris-warriors.github.io/#<game-id>`.
 Games live in the `GAMES` list near the bottom of `index.html` (newest first).
 Score graphics for the app are in `graphics/`.
+
+Logos: Morris marks are in `assets/`; opponent logos go in `assets/logos/` (file name = school, e.g. `southland-prep.png`).
