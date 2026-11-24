@@ -17,6 +17,7 @@
 :root{color-scheme:light dark;--bg:light-dark(#ffffff,#171012);--ink:light-dark(#1f1515,#f2ebe6);--soft:light-dark(#6b5a58,#bfaea9);--line:light-dark(#ece2de,#3a2a2c);--panel:light-dark(#faf6f4,#211719);--maroon:#5d2e2f;--deep:#3f1d1e;--gold:#c1a675;--accent:light-dark(#5d2e2f,#d9c08e);--bar:light-dark(#5d2e2f,#c1a675);--opp:light-dark(#a99b98,#6b5a5c)}
 :root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.65 Barlow,system-ui,sans-serif;overflow-x:clip}
 img{max-width:100%}
 .band{padding-left:max(5vw,16px);padding-right:max(5vw,16px)}
@@ -57,6 +58,12 @@ h1{font:italic 800 clamp(38px,5.2vw,60px)/1.02 "Barlow Condensed",Impact,sans-se
 .tbox{display:inline-block;min-width:1.9em;padding:2px .2em 0;font:italic 800 clamp(40px,7vw,80px)/1 "Barlow Condensed",sans-serif;text-align:center;background:#00000033;clip-path:polygon(10% 0,100% 0,90% 100%,0 100%)}
 .win .tbox{background:var(--gold);color:var(--deep)}
 .lose .tbox{color:#e5d2bd}
+.mini{display:none;width:100%;margin-top:14px;border-collapse:collapse;font:600 17px/1 "Barlow Condensed",sans-serif;font-variant-numeric:tabular-nums;color:#f1e6da;background:#00000026}
+.mini th{font:italic 700 14px/1 "Barlow Condensed",sans-serif;color:var(--gold);padding:8px 4px;text-align:center}
+.mini td{padding:7px 4px;text-align:center;border-top:1px solid #ffffff1a}
+.mini th:first-child,.mini td:first-child{text-align:left;padding-left:12px}
+.mini td:last-child{font-weight:800;color:#fff}
+@media(max-width:640px){.ls .q{display:none}.mini{display:table}.ls td.nm{white-space:normal;font-size:clamp(22px,7vw,30px)}.ls td{padding:10px 4px}.lg{width:52px;height:40px}.lg.ini{width:40px;margin-inline:6px}.tbox{font-size:clamp(38px,12vw,56px)}}
 .body{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);padding-block:clamp(28px,4vw,48px)}
 .sec{display:flex;align-items:center;gap:12px;margin:0 0 14px;font-size:24px;color:var(--accent);line-height:1}
 .sec::after{content:"";flex:1;height:3px;background:linear-gradient(90deg,var(--gold),transparent)}
@@ -162,15 +169,16 @@ const fmtDate = (d, long) => new Date(d + "T12:00:00").toLocaleDateString("en-US
 const pct = ([a, b]) => b ? Math.round(a / b * 100) : 0;
 const app = document.getElementById("app");
 
+const abbr = t => (t.abbr || (t.name.split(/\s+/).length > 1 ? t.name.split(/\s+/).map(w => w[0]).join("") : t.name.slice(0, 3))).toUpperCase();
 function badge(t, cls) {
   const c = cls === undefined ? "lg" : cls;
   if (t.logo) return `<img class="${c}" src="${esc(t.logo)}" alt="">`;
-  const ini = (t.abbr || t.name.split(/\s+/).map(w => w[0]).join("").slice(0, 3)).toUpperCase();
+  const ini = abbr(t).slice(0, 3);
   return `<span class="${c} ini" style="--c:${esc(t.color || "#7d6f6d")}">${esc(ini)}</span>`;
 }
 function row(t, total, win) {
   const sub = [t.sub, t.record ? "(" + t.record + ")" : ""].filter(Boolean).join(" ");
-  return `<tr class="${win ? "win" : "lose"}"><td class="nm"><div class="nmw">${badge(t)}<div>${esc(t.short || t.name)}<small>${esc(sub)}</small></div></div></td>${t.periods.map(p => `<td>${esc(p)}</td>`).join("")}<td class="tot"><span class="tbox">${esc(total)}</span></td></tr>`;
+  return `<tr class="${win ? "win" : "lose"}"><td class="nm"><div class="nmw">${badge(t)}<div>${esc(t.short || t.name)}<small>${esc(sub)}</small></div></div></td>${t.periods.map(p => `<td class="q">${esc(p)}</td>`).join("")}<td class="tot"><span class="tbox">${esc(total)}</span></td></tr>`;
 }
 function cmp(s) {
   const a = pct(s.m), b = pct(s.o);
@@ -185,7 +193,7 @@ function render() {
   const id = decodeURIComponent(location.hash.slice(1));
   const g = GAMES.find(x => x.id === id) || GAMES[0];
   const mT = sum(g.morris.periods), oT = sum(g.opp.periods);
-  const heads = g.morris.periods.map((_, i) => `<th scope="col">${i < 4 ? esc(g.periodLabel + (i + 1)) : "OT" + (i > 4 ? i - 3 : "")}</th>`).join("");
+  const heads = g.morris.periods.map((_, i) => `<th scope="col" class="q">${i < 4 ? esc(g.periodLabel + (i + 1)) : "OT" + (i > 4 ? i - 3 : "")}</th>`).join("");
   const others = GAMES.filter(x => x !== g);
   const tp = g.leaders.some(l => l.tp);
   document.title = g.headline;
@@ -200,6 +208,7 @@ function render() {
       <div class="bhead"><span class="final"><span class="cap">Final</span></span><span class="bdate">${esc(fmtDate(g.date, true))}</span></div>
       <table class="ls"><thead><tr><th scope="col">Team</th>${heads}<th scope="col">Final</th></tr></thead>
       <tbody>${row(g.opp, oT, oT > mT)}${row(g.morris, mT, mT > oT)}</tbody></table>
+      <table class="mini" aria-hidden="true"><thead><tr><th></th>${heads.replace(/ class="q"/g, "")}<th>T</th></tr></thead><tbody>${[[g.opp, oT], [g.morris, mT]].map(([t, tot]) => `<tr><td>${esc(abbr(t))}</td>${t.periods.map(p => `<td>${esc(p)}</td>`).join("")}<td>${esc(tot)}</td></tr>`).join("")}</tbody></table>
     </div>
   </div></section>
   <section class="band"><div class="wrap body">
