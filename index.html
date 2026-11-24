@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Warriors Game Recaps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE everyday school sports news: proud, upbeat, respectful
+   IDEA the sports page of a hometown paper, headed by the gym's scoreboard
+   PICTURE a big maroon linescore board: teams, quarters, final score
+   COLOUR white ground, MCHS maroon #5d2e2f dominant, gold #c1a675 on maroon only
+   TYPE Barlow Condensed for scoreboard and headlines, Barlow for reading
+   LAYOUT masthead band, headline, full-width board, story beside stat rail; phone stacks */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#171012);--ink:light-dark(#1f1515,#f2ebe6);--soft:light-dark(#6b5a58,#bfaea9);--line:light-dark(#eadfdb,#3a2a2c);--panel:light-dark(#f8f3f1,#211719);--maroon:#5d2e2f;--deep:#3f1d1e;--gold:#c1a675;--accent:light-dark(#5d2e2f,#d9c08e);--opp:light-dark(#b9aaa7,#5e4d4f)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:24px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 Barlow,system-ui,sans-serif;overflow-x:clip}
+a{color:var(--accent)}
+.band{padding-left:max(5vw,16px);padding-right:max(5vw,16px)}
+.wrap{max-width:1180px;margin:0 auto}
+.mast{background:var(--maroon);color:#fff;border-bottom:4px solid var(--gold)}
+.mast .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-block:14px}
+.brand{font:800 28px/1 "Barlow Condensed",Impact,sans-serif;letter-spacing:.01em;color:#fff;text-decoration:none}
+.brand span{color:var(--gold)}
+.school{font-size:14px;color:#ead9c4}
+.head{padding-block:clamp(24px,4vw,44px) 20px}
+.team{display:inline-block;background:var(--panel);border:1px solid var(--line);color:var(--accent);font-weight:600;font-size:14px;padding:4px 12px;border-radius:99px;margin-bottom:14px}
+h1{font:800 clamp(34px,5.4vw,54px)/1.04 "Barlow Condensed",Impact,sans-serif;letter-spacing:-.01em;margin:0 0 12px;text-wrap:balance;max-width:24ch}
+.dek{font-size:clamp(17px,2vw,20px);color:var(--soft);margin:0;max-width:62ch}
+.meta{margin-top:12px;font-size:14px;color:var(--soft)}
+.board{background:linear-gradient(180deg,var(--maroon),var(--deep));color:#fff;border-radius:14px;padding:clamp(16px,3vw,28px);box-shadow:inset 0 0 0 1px #ffffff14}
+.bhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.final{background:var(--gold);color:var(--deep);font:800 16px/1 "Barlow Condensed",sans-serif;padding:6px 12px;border-radius:6px;letter-spacing:.04em}
+.bdate{color:#e5d2bd;font-size:14px}
+.ls{width:100%;border-collapse:collapse;font-family:"Barlow Condensed",sans-serif;font-variant-numeric:tabular-nums}
+.ls th{font-weight:600;font-size:15px;color:#e5d2bd;text-align:center;padding:4px 6px;border-bottom:1px solid #ffffff2a}
+.ls th:first-child{text-align:left}
+.ls td{padding:10px 6px;text-align:center;font-size:clamp(20px,3vw,30px);font-weight:600;color:#f1e6da;border-bottom:1px solid #ffffff1a}
+.ls tr:last-child td{border-bottom:0}
+.ls td.nm{text-align:left;font-weight:800;font-size:clamp(22px,3.6vw,36px);color:#fff;white-space:nowrap}
+.ls td.nm small{display:block;font:500 14px/1.2 Barlow,sans-serif;color:#d9c3ad}
+.ls td.tot{font-weight:800;font-size:clamp(44px,8vw,88px);line-height:1;color:#fff;width:1%;padding-left:clamp(10px,3vw,30px)}
+.ls tr.lose td.tot{color:#d9c3ad}
+.body{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);padding-block:clamp(26px,4vw,44px)}
+.story p{margin:0 0 1.1em;max-width:66ch}
+.story p:first-child::first-letter{font:800 3.1em/.8 "Barlow Condensed",sans-serif;float:left;margin:.08em .1em 0 0;color:var(--accent)}
+.credit{font-size:14px;color:var(--soft);border-top:1px solid var(--line);padding-top:12px;margin-top:6px}
+.rail{display:grid;gap:18px;align-content:start}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}
+.card h2{font:800 22px/1.1 "Barlow Condensed",sans-serif;margin:0 0 12px}
+.ldr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:8px 0;border-top:1px solid var(--line)}
+.ldr:first-of-type{border-top:0;padding-top:0}
+.ldr b{font-weight:600}
+.ldr .pts{font:800 28px/1 "Barlow Condensed",sans-serif;color:var(--accent);grid-row:span 2;align-self:center;white-space:nowrap}
+.ldr .pts small{font-size:15px;font-weight:600;margin-left:2px}
+.ldr span{font-size:14px;color:var(--soft)}
+.key{display:flex;gap:14px;font-size:14px;color:var(--soft);margin-bottom:8px;flex-wrap:wrap}
+.key i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.sh{padding:8px 0;border-top:1px solid var(--line)}
+.sh:first-of-type{border-top:0}
+.sh .lb{font-weight:600;font-size:15px;margin-bottom:4px}
+.bar{display:grid;grid-template-columns:minmax(0,1fr) 7.2em;gap:10px;align-items:center;font-size:14px;margin:3px 0}
+.bar .tr{height:12px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar .fl{height:100%;border-radius:6px}
+.bar .v{white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums;color:var(--soft)}
+.next{margin-top:22px;background:var(--maroon);color:#fff;border-color:var(--maroon)}
+.next h2{color:var(--gold)}
+.next p{margin:0;font-size:18px;font-weight:600}
+.more{border-top:1px solid var(--line);padding-block:clamp(24px,4vw,40px)}
+.more h2{font:800 28px/1.1 "Barlow Condensed",sans-serif;margin:0 0 12px}
+.list{list-style:none;margin:0;padding:0}
+.list a{display:grid;grid-template-columns:7em minmax(0,1fr) auto;gap:14px;align-items:center;padding:14px 0;border-top:1px solid var(--line);text-decoration:none;color:var(--ink);min-height:44px}
+.list a:hover b,.list a:focus-visible b{color:var(--accent);text-decoration:underline}
+.list span{font-size:14px;color:var(--soft)}
+.list em{font:800 22px/1 "Barlow Condensed",sans-serif;font-style:normal;white-space:nowrap}
+footer{display:block;background:var(--maroon);color:#ead9c4;font-size:14px;padding-block:18px}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+@media(max-width:860px){.body{grid-template-columns:minmax(0,1fr)}.rail{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}}
+@media(max-width:600px){.ls th,.ls td{padding:8px 3px}.ls td.nm small{font-size:13px}.list a{grid-template-columns:minmax(0,1fr) auto}.list a span:first-child{grid-column:1/-1;margin-bottom:-10px}.brand{font-size:24px}}
+@media(prefers-reduced-motion:no-preference){.board{animation:rise .5s ease-out}@keyframes rise{from{opacity:0;transform:translateY(8px)}}}
+</style>
+</head>
+<body>
+<header class="mast band"><div class="wrap"><a class="brand" href="#">Warriors <span>Recap</span></a><div class="school">Morris Community High School athletics</div></div></header>
+<main id="app"></main>
+<footer class="band"><div class="wrap">Morris Warriors · Morris Community High School, Morris, IL</div></footer>
+<script>
+{
+/* ---- Games: newest first. Add a new object to the top for each recap. ---- */
+const GAMES = [
+  {
+    id: "bbb-southland-prep-112326",
+    team: "Boys varsity basketball",
+    date: "2026-11-23",
+    headline: "Warriors Hit 7 Threes but Fall to Southland Prep, 73-44",
+    dek: "Brycen Johnson scored 20 and Cade Osborne added 13 as Morris shot 7-of-12 from beyond the arc.",
+    morris: { name: "Morris", sub: "Warriors", record: "0-1", periods: [15, 7, 18, 4] },
+    opp: { name: "Southland Prep", short: "Southland", sub: "Eagles", record: "", periods: [18, 24, 26, 5] },
+    periodLabel: "Q",
+    story: [
+      "The Morris Warriors hung with Southland Prep early on Monday night but couldn't keep pace after the first quarter, falling 73-44.",
+      "Morris trailed just 18-15 after one before the Eagles outscored the Warriors 24-7 in the second quarter to take a 42-22 lead into halftime. Southland Prep kept pulling away and led 68-40 after three. Eagles standout Tristan Garner led all scorers with 35 points.",
+      "The Warriors were sharp from beyond the arc, knocking down 7 of 12 three-point attempts (58%). Brycen Johnson led Morris with 20 points, including 3-of-6 shooting from deep, and Cade Osborne added 13.",
+      "There was a bright spot for the future, too: sophomores Broderick, Peterson and Harrison all scored their first varsity points, with Harrison chipping in 6.",
+      "Morris (0-1) is back on the court Tuesday, Nov. 24, against Comer."
+    ],
+    leaders: [
+      { name: "Brycen Johnson", note: "3-6 from three", pts: 20 },
+      { name: "Cade Osborne", note: "", pts: 13 },
+      { name: "Harrison", note: "Sophomore, first varsity points", pts: 6 }
+    ],
+    shooting: [
+      { label: "Field goals", m: [14, 30], o: [28, 50] },
+      { label: "Three-pointers", m: [7, 12], o: [10, 23] },
+      { label: "Free throws", m: [9, 16], o: [7, 11] }
+    ],
+    next: "Comer, Tuesday, Nov. 24",
+    source: "@MCHSBkBall"
+  }
+];
+
+const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const sum = a => a.reduce((x, y) => x + y, 0);
+const fmtDate = (d, long) => new Date(d + "T12:00:00").toLocaleDateString("en-US", long ? { weekday: "long", month: "long", day: "numeric", year: "numeric" } : { month: "short", day: "numeric" });
+const pct = ([a, b]) => b ? Math.round(a / b * 100) : 0;
+const app = document.getElementById("app");
+
+function row(t, total, win) {
+  const sub = [t.sub, t.record ? "(" + t.record + ")" : ""].filter(Boolean).join(" ");
+  return `<tr class="${win ? "win" : "lose"}"><td class="nm">${esc(t.short || t.name)}<small>${esc(sub)}</small></td>${t.periods.map(p => `<td>${esc(p)}</td>`).join("")}<td class="tot">${esc(total)}</td></tr>`;
+}
+
+function render() {
+  const id = decodeURIComponent(location.hash.slice(1));
+  const g = GAMES.find(x => x.id === id) || GAMES[0];
+  const mT = sum(g.morris.periods), oT = sum(g.opp.periods);
+  const heads = g.morris.periods.map((_, i) => `<th scope="col">${i < 4 ? esc(g.periodLabel + (i + 1)) : "OT" + (i > 4 ? i - 3 : "")}</th>`).join("");
+  const others = GAMES.filter(x => x !== g);
+  document.title = g.headline;
+  app.innerHTML = `
+  <section class="band head"><div class="wrap">
+    <div class="team">${esc(g.team)}</div>
+    <h1>${esc(g.headline)}</h1>
+    <p class="dek">${esc(g.dek)}</p>
+  </div></section>
+  <section class="band"><div class="wrap">
+    <div class="board" role="group" aria-label="Final score">
+      <div class="bhead"><span class="final">FINAL</span><span class="bdate">${esc(fmtDate(g.date, true))}</span></div>
+      <table class="ls"><thead><tr><th scope="col">Team</th>${heads}<th scope="col">T</th></tr></thead>
+      <tbody>${row(g.opp, oT, oT > mT)}${row(g.morris, mT, mT > oT)}</tbody></table>
+    </div>
+  </div></section>
+  <section class="band"><div class="wrap body">
+    <article class="story">${g.story.map(p => `<p>${esc(p)}</p>`).join("")}
+      <div class="credit">Stats via ${esc(g.source)}</div>
+      ${g.next ? `<div class="card next"><h2>Up next</h2><p>${esc(g.next)}</p></div>` : ""}
+    </article>
+    <aside class="rail">
+      <div class="card"><h2>Warriors leaders</h2>${g.leaders.map(l => `<div class="ldr"><b>${esc(l.name)}</b><div class="pts">${esc(l.pts)}<small>pts</small></div><span>${esc(l.note || " ")}</span></div>`).join("")}</div>
+      <div class="card"><h2>Team shooting</h2>
+        <div class="key"><span><i style="background:var(--accent)"></i>Morris</span><span><i style="background:var(--opp)"></i>${esc(g.opp.short || g.opp.name)}</span></div>
+        ${g.shooting.map(s => `<div class="sh"><div class="lb">${esc(s.label)}</div>
+          <div class="bar"><div class="tr"><div class="fl" style="width:${pct(s.m)}%;background:var(--accent)"></div></div><div class="v">${esc(s.m[0] + "-" + s.m[1])} · ${pct(s.m)}%</div></div>
+          <div class="bar"><div class="tr"><div class="fl" style="width:${pct(s.o)}%;background:var(--opp)"></div></div><div class="v">${esc(s.o[0] + "-" + s.o[1])} · ${pct(s.o)}%</div></div></div>`).join("")}
+      </div>
+    </aside>
+  </div></section>
+  ${others.length ? `<section class="band more"><div class="wrap"><h2>More recaps</h2><ul class="list">${others.map(x => {
+    const a = sum(x.morris.periods), b = sum(x.opp.periods);
+    return `<li><a href="#${esc(x.id)}"><span>${esc(fmtDate(x.date))} · ${esc(x.team)}</span><b>${esc(x.headline)}</b><em>${a > b ? "W" : a < b ? "L" : "T"} ${esc(a)}-${esc(b)}</em></a></li>`;
+  }).join("")}</ul></div></section>` : ""}`;
+  window.scrollTo(0, 0);
+}
+window.addEventListener("hashchange", render);
+render();
+}
+</script>
+</body>
+</html>
